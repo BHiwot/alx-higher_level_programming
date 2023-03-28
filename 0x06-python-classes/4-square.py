@@ -1,50 +1,37 @@
 #!/usr/bin/python3
-"""Square generation module for Python project 0x06
+"""Square module.
+This module contains a class that defines a square and its size and checking
+if the given values are right, and a setter and getter methods to set or get
+it. There's also an area method that returns the area of the square.
 """
 
 
-class Square:
-    """Class defined for square generation.
-    Args:
-        size (int): length of one side of square
-    Attributes:
-        __size (int): length of one side of square
-    """
+class Square():
+    """Defines a square."""
 
     def __init__(self, size=0):
-        # attribute assigment here engages setters defined below
+        """Sets the necessary attributes for the Square object.
+        Args:
+            size (int): the size of one edge of the square.
+        """
         self.size = size
 
     @property
     def size(self):
-        """__size getter, setter with same method name
-        Returns:
-            __size (int): length of one side, squared
-        """
+        """Get or set the size of the square."""
         return self.__size
 
     @size.setter
     def size(self, value):
-        """Args:
-            value (int): length of one side of square
-        Attributes:
-            __size (int): length of one side of square
-        Raises:
-            TypeError: if value is not an integer
-            ValueError: if value is less than 0
-        """
-        if type(value) is not int:
-            raise TypeError('size must be an integer')
-        if value < 0:
-            raise ValueError('size must be >= 0')
-        self.__size = value
+        if type(value) is int:
+            if value >= 0:
+                self.__size = value
+            else:
+                raise ValueError("size must be >= 0")
+        else:
+            raise TypeError("size must be an integer")
 
     def area(self):
-        """Calulates area of square.
-        Attributes:
-            __size (int): length of one side of square
-        Returns:
-            area (int): length of one side, squared
-        """
-        area = self.__size * self.__size
-        return 
+        """Returns the current square area."""
+
+        return self.__size ** 2
