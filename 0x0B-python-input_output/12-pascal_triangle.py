@@ -1,23 +1,24 @@
+nes (17 sloc)  607 Bytes
+ 
+
 #!/usr/bin/python3
-"""pascal_triangle module.
-Contains a function that returns a list of lists of
-integers representing the Pascal’s triangle of n.
-"""
+"""method for student creation"""
 
 
-def pascal_triangle(n):
-    """
-    Returns a list of lists of integers
-    representing the Pascal’s triangle of n.
-    """
-    if n <= 0:
-        return []
+class Student:
+    """Student obj, interesting how you don't have to directly
+    test for strings in a loop, python is weird"""
 
-    result = [[1]]
-    while len(result) is not n:
-        tmp = [1]
-        for i in range(len(result[-1]) - 1):
-            tmp.append(result[-1][i] + result[-1][i + 1])
-        tmp.append(1)
-        result.append(tmp)
-    return 
+    def __init__(self, first_name, last_name, age):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.age = age
+
+    def to_json(self, attrs=None):
+        if attrs is None:
+            return self.__dict__
+        new_dictionary = {}
+        for key, value in self.__dict__.items():
+            if key in attrs:
+                new_dictionary[key] = value
+        return new_dictionary
