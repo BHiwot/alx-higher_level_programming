@@ -1,26 +1,25 @@
 #!/usr/bin/node
-
 const request = require('request');
-const url = process.argv[2];
-
-request(url, function (err, response, body) {
+const args = process.argv;
+const requestURL = args[2];
+const list = {};
+request.get(requestURL, (err, res, body) => {
   if (err) {
     console.log(err);
-  } else if (response.statusCode === 200) {
-    const completed = {};
-    const tasks = JSON.parse(body);
-    for (const i in tasks) {
-      const task = tasks[i];
-      if (task.completed === true) {
-        if (completed[task.userId] === undefined) {
-          completed[task.userId] = 1;
+  } else {
+    const data = JSON.parse(body);
+    let user = 'default';
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].completed === true) {
+        if (!(data[i].userId in list)) {
+          user = data[i].userId;
+          list[user] = 1;
         } else {
-          completed[task.userId]++;
+          user = data[i].userId;
+          list[user] += 1;
         }
       }
     }
-    console.log(completed);
-  } else {
-    console.log('An error occured. Status code: ' + response.statusCode);
+    console.log(list);
   }
 });
